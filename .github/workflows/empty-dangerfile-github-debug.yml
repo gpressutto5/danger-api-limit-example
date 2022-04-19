@@ -1,0 +1,25 @@
+name: Empty dangerfile GitHub debug
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  empty-dangerfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Install js dependencies
+        run: yarn install
+
+      - name: Danger
+        run: DEBUG="*GitHub*" yarn danger ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
